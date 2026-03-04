@@ -1,5 +1,6 @@
 package mk.ukim.finki.eshopbackend.web.controller;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import mk.ukim.finki.eshopbackend.model.dto.CreateProductDto;
 import mk.ukim.finki.eshopbackend.model.dto.DisplayProductDto;
@@ -37,7 +38,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<DisplayProductDto> create(@RequestBody CreateProductDto createProductDto) {
+    public ResponseEntity<DisplayProductDto> create(@RequestBody @Valid CreateProductDto createProductDto) {
         return ResponseEntity.ok(productApplicationService.create(createProductDto));
     }
 

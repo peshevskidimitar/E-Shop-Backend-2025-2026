@@ -28,7 +28,7 @@ public class Product extends BaseAuditableEntity {
     private Integer quantity;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     public Product(String name, String description, BigDecimal price, Integer quantity, Category category) {
