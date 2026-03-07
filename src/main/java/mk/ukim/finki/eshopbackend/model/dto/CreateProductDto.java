@@ -10,6 +10,7 @@ public record CreateProductDto(
     String description,
     @Positive
     BigDecimal price,
+    @Positive
     Integer quantity,
     Long categoryId
 ) {
