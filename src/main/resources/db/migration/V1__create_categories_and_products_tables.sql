@@ -14,5 +14,5 @@ create table products (
     description varchar(255),
     price numeric(19, 2) not null,
     quantity integer not null,
-    category_id bigint not null references products(id) on delete cascade
+    category_id bigint not null references categories(id) on delete cascade
 );
