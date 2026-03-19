@@ -5,6 +5,7 @@ import java.util.List;
 import mk.ukim.finki.eshopbackend.model.dto.CreateProductDto;
 import mk.ukim.finki.eshopbackend.model.dto.DisplayProductDto;
 import mk.ukim.finki.eshopbackend.service.application.ProductApplicationService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,6 +37,15 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<DisplayProductDto>> findAll() {
         return ResponseEntity.ok(productApplicationService.findAll());
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<DisplayProductDto>> findAll(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "name") String sortBy
+    ) {
+        return ResponseEntity.ok(productApplicationService.findAll(page, size, sortBy));
     }
 
     @PostMapping("/add")

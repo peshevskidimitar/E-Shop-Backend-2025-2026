@@ -1,5 +1,6 @@
 package mk.ukim.finki.eshopbackend.service.application.impl;
 
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import mk.ukim.finki.eshopbackend.model.domain.Category;
@@ -9,6 +10,7 @@ import mk.ukim.finki.eshopbackend.model.exception.CategoryNotFoundException;
 import mk.ukim.finki.eshopbackend.service.application.ProductApplicationService;
 import mk.ukim.finki.eshopbackend.service.domain.CategoryService;
 import mk.ukim.finki.eshopbackend.service.domain.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,6 +44,7 @@ public class ProductApplicationServiceImpl implements ProductApplicationService 
     }
 
     @Override
+    @Transactional
     public Optional<DisplayProductDto> update(Long id, CreateProductDto createProductDto) {
         Category category = categoryService
             .findById(createProductDto.categoryId())
@@ -55,6 +58,12 @@ public class ProductApplicationServiceImpl implements ProductApplicationService 
     public Optional<DisplayProductDto> deleteById(Long id) {
         return productService
             .deleteById(id)
+            .map(DisplayProductDto::from);
+    }
+
+    @Override
+    public Page<DisplayProductDto> findAll(int page, int size, String sortBy) {
+        return productService.findAll(page, size, sortBy)
             .map(DisplayProductDto::from);
     }
 }

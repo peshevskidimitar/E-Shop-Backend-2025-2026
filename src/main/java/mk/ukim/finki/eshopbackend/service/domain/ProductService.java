@@ -3,6 +3,7 @@ package mk.ukim.finki.eshopbackend.service.domain;
 import java.util.List;
 import java.util.Optional;
 import mk.ukim.finki.eshopbackend.model.domain.Product;
+import org.springframework.data.domain.Page;
 
 public interface ProductService {
     Optional<Product> findById(Long id);
@@ -14,4 +15,6 @@ public interface ProductService {
     Optional<Product> update(Long id, Product product);
 
     Optional<Product> deleteById(Long id);
+
+    Page<Product> findAll(int page, int size, String sortBy);
 }

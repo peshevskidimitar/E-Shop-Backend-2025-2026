@@ -5,6 +5,10 @@ import java.util.Optional;
 import mk.ukim.finki.eshopbackend.model.domain.Product;
 import mk.ukim.finki.eshopbackend.repository.ProductRepository;
 import mk.ukim.finki.eshopbackend.service.domain.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,5 +53,11 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> product = productRepository.findById(id);
         product.ifPresent(productRepository::delete);
         return product;
+    }
+
+    @Override
+    public Page<Product> findAll(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return productRepository.findAll(pageable);
     }
 }
