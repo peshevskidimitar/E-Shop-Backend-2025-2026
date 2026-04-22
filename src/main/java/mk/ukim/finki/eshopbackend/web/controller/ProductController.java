@@ -3,6 +3,7 @@ package mk.ukim.finki.eshopbackend.web.controller;
 import jakarta.validation.Valid;
 import java.util.List;
 import mk.ukim.finki.eshopbackend.model.dto.CreateProductDto;
+import mk.ukim.finki.eshopbackend.model.dto.DisplayProductDetailsDto;
 import mk.ukim.finki.eshopbackend.model.dto.DisplayProductDto;
 import mk.ukim.finki.eshopbackend.service.application.ProductApplicationService;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,14 @@ public class ProductController {
     public ResponseEntity<DisplayProductDto> findById(@PathVariable Long id) {
         return productApplicationService
             .findById(id)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/details")
+    public ResponseEntity<DisplayProductDetailsDto> findWithDetailsById(@PathVariable Long id) {
+        return productApplicationService
+            .findWithDetailsById(id)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
     }

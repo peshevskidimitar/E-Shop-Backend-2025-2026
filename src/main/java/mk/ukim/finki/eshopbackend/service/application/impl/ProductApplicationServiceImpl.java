@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import mk.ukim.finki.eshopbackend.model.domain.Category;
 import mk.ukim.finki.eshopbackend.model.dto.CreateProductDto;
+import mk.ukim.finki.eshopbackend.model.dto.DisplayProductDetailsDto;
 import mk.ukim.finki.eshopbackend.model.dto.DisplayProductDto;
 import mk.ukim.finki.eshopbackend.model.exception.CategoryNotFoundException;
 import mk.ukim.finki.eshopbackend.service.application.ProductApplicationService;
@@ -28,6 +29,13 @@ public class ProductApplicationServiceImpl implements ProductApplicationService 
         return productService
             .findById(id)
             .map(DisplayProductDto::from);
+    }
+
+    @Override
+    public Optional<DisplayProductDetailsDto> findWithDetailsById(Long id) {
+        return productService
+            .findById(id)
+            .map(DisplayProductDetailsDto::from);
     }
 
     @Override
