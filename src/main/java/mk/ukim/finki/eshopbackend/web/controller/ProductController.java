@@ -65,7 +65,7 @@ public class ProductController {
     @PutMapping("/{id}/edit")
     public ResponseEntity<DisplayProductDto> update(
         @PathVariable Long id,
-        @RequestBody CreateProductDto createProductDto
+        @RequestBody @Valid CreateProductDto createProductDto
     ) {
         return productApplicationService
             .update(id, createProductDto)

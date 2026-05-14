@@ -8,6 +8,7 @@ import org.springframework.security.access.expression.method.DefaultMethodSecuri
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -79,18 +80,41 @@ public class JwtWebSecurityConfig {
                     )
                     .authenticated()
                     .requestMatchers(
+                        HttpMethod.GET,
                         "/api/categories",
                         "/api/categories/{id}",
                         "/api/products",
-                        "/api/products/{id}"
+                        "/api/products/{id}",
+                        "/api/products/{id}/details",
+                        "/api/shopping-cart"
                     )
                     .hasRole("USER")
                     .requestMatchers(
+                        HttpMethod.POST,
+                        "/api/shopping-cart/add",
+                        "/api/shopping-cart/checkout"
+                    )
+                    .hasRole("USER")
+                    .requestMatchers(
+                        HttpMethod.DELETE,
+                        "/api/shopping-cart/remove/{productId}"
+                    )
+                    .hasRole("USER")
+                    .requestMatchers(
+                        HttpMethod.POST,
                         "/api/categories/add",
+                        "/api/products/add"
+                    )
+                    .hasRole("ADMINISTRATOR")
+                    .requestMatchers(
+                        HttpMethod.PUT,
                         "/api/categories/{id}/edit",
+                        "/api/products/{id}/edit"
+                    )
+                    .hasRole("ADMINISTRATOR")
+                    .requestMatchers(
+                        HttpMethod.DELETE,
                         "/api/categories/{id}/delete",
-                        "/api/products/add",
-                        "/api/products/{id}/edit",
                         "/api/products/{id}/delete"
                     )
                     .hasRole("ADMINISTRATOR")
